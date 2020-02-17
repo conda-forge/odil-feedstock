@@ -9,7 +9,6 @@ source:
   url: https://github.com/lamyj/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: b3cf6f7f5a879e8a9de7b8e486a3d32afb8edac61be590d9d0395d1970331aa7
   patches:
-    - windows_uuid.patch  # [win]
     - windows_boost_system_and_python.patch  # [win]
 
 build:
