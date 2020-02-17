@@ -1,5 +1,5 @@
 {% set name = "odil" %}
-{% set version = "0.10.0" %}
+{% set version = "0.11.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/lamyj/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 5dcac1e415a84af737970c2db7cde329220080c5aaae933917757772067050c8
+  sha256: b3cf6f7f5a879e8a9de7b8e486a3d32afb8edac61be590d9d0395d1970331aa7
   patches:
     - windows_uuid.patch  # [win]
     - windows_boost_system_and_python.patch  # [win]
