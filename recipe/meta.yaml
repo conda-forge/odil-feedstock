@@ -12,7 +12,7 @@ source:
     - windows_boost_system_and_python.patch  # [win]
 
 build:
-  number: 0
+  number: 1
   skip: True  # [py<=35 or (win and vc<14)]
 
 requirements:
