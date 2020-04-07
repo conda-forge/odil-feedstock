@@ -36,7 +36,7 @@ test:
 
 about:
   home: https://github.com/lamyj/{{ name|lower }}
-  license: CeCILL-B
+  license: CECILL-B
   license_family: OTHER
   license_file: LICENSE.txt
   summary: Library for the DICOM standard
