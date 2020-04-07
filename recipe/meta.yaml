@@ -1,5 +1,5 @@
 {% set name = "odil" %}
-{% set version = "0.11.0" %}
+{% set version = "0.12.0" %}
 
 package:
   name: {{ name|lower }}
@@ -7,13 +7,11 @@ package:
 
 source:
   url: https://github.com/lamyj/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: b3cf6f7f5a879e8a9de7b8e486a3d32afb8edac61be590d9d0395d1970331aa7
-  patches:
-    - windows_boost_system_and_python.patch  # [win]
+  sha256: 001448ea18ce593ded5744b8755845520f71bbc9571dcee25161fe4cab936693
 
 build:
   number: 0
-  skip: True  # [py<=35 or (win and vc<14)]
+  skip: true  # [py<=35 or win]
 
 requirements:
   build:
@@ -36,14 +34,14 @@ test:
 
 about:
   home: https://github.com/lamyj/{{ name|lower }}
-  license: CeCILL-B
+  license: CECILL-B
   license_family: OTHER
   license_file: LICENSE.txt
-  summary: 'Library for the DICOM standard'
+  summary: Library for the DICOM standard
 
   description: |
     Odil is a C++11 library for the DICOM standard.
-    
+
     Odil leverages C++ constructs to provide a user-friendly API of the different parts of the DICOM standard. Included in Odil are:
     - Reading and writing data sets with any transfer syntax
     - Standard JSON and XML representation of datasets
