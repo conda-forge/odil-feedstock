@@ -11,9 +11,9 @@ channel_targets:
 cxx_compiler:
 - clangxx
 cxx_compiler_version:
-- '10'
+- '11'
 icu:
-- '67'
+- '68'
 jsoncpp:
 - 1.8.4
 macos_machine:

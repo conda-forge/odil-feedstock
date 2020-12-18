@@ -12,7 +12,7 @@ source:
     - remove_boost_endian.patch
 
 build:
-  number: 4
+  number: 5
   skip: true  # [py<=35 or win]
 
 requirements:
