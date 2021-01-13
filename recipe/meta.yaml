@@ -8,8 +8,6 @@ package:
 source:
   url: https://github.com/lamyj/{{ name }}/archive/v{{ version }}.tar.gz
   sha256: 48e607c247d4a20701692062a2761f36ae8a68199ec3bbe7cabc395e1731daa9
-  patches:
-    - remove_boost_endian.patch
 
 build:
   number: 0
