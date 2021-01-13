@@ -33,5 +33,5 @@ python:
 target_platform:
 - linux-64
 zip_keys:
-- - boost
-  - boost_cpp
+- - cdt_name
+  - docker_image

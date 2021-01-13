@@ -1,5 +1,5 @@
 {% set name = "odil" %}
-{% set version = "0.12.0" %}
+{% set version = "0.12.1" %}
 
 package:
   name: {{ name|lower }}
@@ -7,12 +7,10 @@ package:
 
 source:
   url: https://github.com/lamyj/{{ name }}/archive/v{{ version }}.tar.gz
-  sha256: 001448ea18ce593ded5744b8755845520f71bbc9571dcee25161fe4cab936693
-  patches:
-    - remove_boost_endian.patch
+  sha256: 48e607c247d4a20701692062a2761f36ae8a68199ec3bbe7cabc395e1731daa9
 
 build:
-  number: 5
+  number: 0
   skip: true  # [py<=35 or win]
 
 requirements:
