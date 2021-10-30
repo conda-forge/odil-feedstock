@@ -1,0 +1,73 @@
+diff --git a/wrappers/python/ElementsDictionary.cpp b/wrappers/python/ElementsDictionary.cpp
+index ae96ad8..c4fb57e 100644
+--- a/wrappers/python/ElementsDictionary.cpp
++++ b/wrappers/python/ElementsDictionary.cpp
+@@ -54,8 +54,8 @@ void wrap_ElementsDictionary(pybind11::module & m)
+         .def_readwrite("vr", &ElementsDictionaryEntry::vr)
+         .def_readwrite("vm", &ElementsDictionaryEntry::vm)
+     ;
+-
+-    bind_map<ElementsDictionary>(m, "ElementsDictionary")
++    
++    auto ElementsDictionary_cl = bind_map<ElementsDictionary>(m, "ElementsDictionary")
+         .def("__getitem__",
+             [](ElementsDictionary & container, Tag const & key)
+             {
+@@ -77,10 +77,26 @@ void wrap_ElementsDictionary(pybind11::module & m)
+                 }
+                 return iterator->second;
+             }
++        );
++#if PYBIND11_VERSION_HEX >= 0x02080000    
++    // WARNING: pybind11 2.8.0 adds a fallback to __contains__ when the type
++    // of the searched item does not match the key type of the dictionary.
++    // Remove *all* __contains__ overloads and rewrap
++    delattr(ElementsDictionary_cl, "__contains__");
++    ElementsDictionary_cl
++        .def(
++            "__contains__",
++            [](ElementsDictionary & container, ElementsDictionaryKey const & key)
++            {
++                return container.find(key) != container.end();
++            }
+         )
++#else
++    ElementsDictionary_cl
++#endif
+         .def(
+             "__contains__",
+-            [](ElementsDictionary const & container, Tag const & key)
++            [](ElementsDictionary & container, Tag const & key)
+             {
+                 return container.find(key) != container.end();
+             }
+diff --git a/wrappers/python/Value.cpp b/wrappers/python/Value.cpp
+index d0b7950..7a44c8e 100644
+--- a/wrappers/python/Value.cpp
++++ b/wrappers/python/Value.cpp
+@@ -250,6 +250,7 @@ void wrap_Value(pybind11::module & m)
+         detail::vector_modifiers<Vector, Class_>(cl);
+ 
+         // vector_accessor
++        using T = typename Vector::value_type;
+         using SizeType = long; //typename Vector::size_type;
+         using ItType   = typename Vector::iterator;
+ 
+@@ -265,9 +266,14 @@ void wrap_Value(pybind11::module & m)
+         cl.def(
+             "__iter__",
+             [](Vector &v) {
+-                typedef detail::iterator_state<
+-                    ItType, ItType, false, return_value_policy::copy> state;
+-
++#if PYBIND11_VERSION_HEX < 0x02080000
++                using state = detail::iterator_state<
++                    ItType, ItType, false, return_value_policy::copy>;
++#else
++                using state = detail::iterator_state<
++                    detail::iterator_access<ItType>,
++                    return_value_policy::copy, ItType, ItType, T>;
++#endif
+                 if (!detail::get_type_info(typeid(state), false))
+                 {
+                     class_<state>(handle(), "iterator", pybind11::module_local())
