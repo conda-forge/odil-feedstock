@@ -12,7 +12,7 @@ source:
     - pybind11_2.8.patch
 
 build:
-  number: 3
+  number: 4
   skip: true  # [py<=35 or win]
 
 requirements:
