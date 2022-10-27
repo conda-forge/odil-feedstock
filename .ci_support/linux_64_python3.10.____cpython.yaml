@@ -23,8 +23,6 @@ pin_run_as_build:
     max_pin: x.x.x
   boost-cpp:
     max_pin: x.x.x
-  jsoncpp:
-    max_pin: x.x.x
   python:
     min_pin: x.x
     max_pin: x.x
