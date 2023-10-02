@@ -1,17 +1,16 @@
-{% set name = "odil" %}
 {% set version = "0.12.2" %}
 
 package:
-  name: {{ name|lower }}
+  name: odil
   version: {{ version }}
 
 source:
-  url: https://github.com/lamyj/{{ name }}/archive/v{{ version }}.tar.gz
+  url: https://github.com/lamyj/odil/archive/v{{ version }}.tar.gz
   sha256: 717be4d42b69ed6060d984e7966ccc1081db957cc54fd1e90ffbdf47c18321cb
 
 build:
-  number: 6
-  skip: true  # [py<=35 or win]
+  number: 7
+  skip: true  # [win]
 
 requirements:
   build:
@@ -19,13 +18,12 @@ requirements:
     - cmake
     - ninja
   host:
-    - boost
+    - libboost-devel
     - icu
     - jsoncpp
     - pybind11
     - python
   run:
-    - boost-cpp
     - python
 
 test:
@@ -33,7 +31,7 @@ test:
     - odil
 
 about:
-  home: https://github.com/lamyj/{{ name|lower }}
+  home: https://github.com/lamyj/odil
   license: CECILL-B
   license_family: OTHER
   license_file: LICENSE.txt
@@ -49,8 +47,8 @@ about:
     - Implementation of the DICOM web-services (WADO-RS, QIDO-RS, STOW-RS)
     - Conversion to and from DCMTK data structures.
 
-  doc_url: https://{{ name|lower }}.readthedocs.io/
-  dev_url: https://github.com/lamyj/{{ name|lower }}
+  doc_url: https://odil.readthedocs.io/
+  dev_url: https://github.com/lamyj/odil
 
 extra:
   recipe-maintainers:
