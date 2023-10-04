@@ -11,5 +11,5 @@ cmake ^
   ../
 if errorlevel 1 exit 1
 
-cmake --build . --config Release --target install
+cmake --build . --config Release --target install --parallel
 if errorlevel 1 exit 1
