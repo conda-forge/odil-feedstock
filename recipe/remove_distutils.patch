@@ -1,0 +1,36 @@
+diff --git a/applications/CMakeLists.txt b/applications/CMakeLists.txt
+index 06ce38c..7271012 100644
+--- a/applications/CMakeLists.txt
++++ b/applications/CMakeLists.txt
+@@ -6,8 +6,11 @@ set_target_properties(PythonFiles PROPERTIES FOLDER "Examples")
+ 
+ if(BUILD_PYTHON_WRAPPERS)
+     execute_process(
+-        COMMAND ${PYTHON_EXECUTABLE}
+-          -c "from distutils.sysconfig import *; print(get_python_lib(True, prefix='').replace('\\\\', '/'))"
++        COMMAND ${Python_EXECUTABLE}
++            -c "import os; import sysconfig; \
++                scheme = {'posix': 'posix_prefix', 'nt': 'nt'}[os.name]; \
++                path = sysconfig.get_path('purelib', scheme, {'base': '.'}); \
++                print(path.replace(os.path.sep, '/'))"
+         OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
+         OUTPUT_STRIP_TRAILING_WHITESPACE)
+ 
+diff --git a/wrappers/python/CMakeLists.txt b/wrappers/python/CMakeLists.txt
+index 8867c95..1e99f3e 100644
+--- a/wrappers/python/CMakeLists.txt
++++ b/wrappers/python/CMakeLists.txt
+@@ -27,8 +27,11 @@ set_target_properties(
+     $<$<PLATFORM_ID:Darwin>:SUFFIX .so>)
+ 
+ execute_process(
+-    COMMAND ${PYTHON_EXECUTABLE}
+-      -c "from distutils.sysconfig import *; print(get_python_lib(True, prefix='').replace('\\\\', '/'))"
++    COMMAND ${Python_EXECUTABLE}
++        -c "import os; import sysconfig; \
++            scheme = {'posix': 'posix_prefix', 'nt': 'nt'}[os.name]; \
++            path = sysconfig.get_path('purelib', scheme, {'base': '.'}); \
++            print(path.replace(os.path.sep, '/'))"
+     OUTPUT_VARIABLE PYTHON_SITE_PACKAGES
+     OUTPUT_STRIP_TRAILING_WHITESPACE)
+ 
