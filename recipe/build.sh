@@ -15,4 +15,4 @@ cmake \
   -DCMAKE_INSTALL_PREFIX=${PREFIX} -DPython_EXECUTABLE=${PYTHON} \
   ../
 
-cmake --build . --target install
+cmake --build . --target install --parallel
