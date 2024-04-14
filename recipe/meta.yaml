@@ -9,6 +9,7 @@ source:
   sha256: 0f78095600f6348cd53d9c04d1659beca5d6d01cd189a443655941229b903b5e
   patches:
     - fix-module-type.patch
+    - ssize_t.patch
 
 build:
   number: 1
