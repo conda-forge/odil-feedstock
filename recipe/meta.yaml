@@ -10,6 +10,7 @@ source:
   patches:
     - fix-module-type.patch
     - ssize_t.patch
+    - windows_build.patch
 
 build:
   number: 1
@@ -27,6 +28,7 @@ requirements:
     - jsoncpp
     - pybind11
     - python
+    - zlib
   run:
     - python
 

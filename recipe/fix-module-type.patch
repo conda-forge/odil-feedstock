@@ -1,5 +1,5 @@
 diff --git a/wrappers/python/CMakeLists.txt b/wrappers/python/CMakeLists.txt
-index 2abc3bf..d8ae896 100644
+index 2abc3bf..1d56c8c 100644
 --- a/wrappers/python/CMakeLists.txt
 +++ b/wrappers/python/CMakeLists.txt
 @@ -10,7 +10,7 @@ list(SORT Header_Files)
@@ -11,3 +11,11 @@ index 2abc3bf..d8ae896 100644
  
  target_compile_definitions(
      pyodil PRIVATE $<$<BOOL:BUILD_SHARED_LIBS>:BOOST_ALL_DYN_LINK>)
+@@ -38,3 +38,7 @@ execute_process(
+ 
+ install(TARGETS pyodil DESTINATION "${PYTHON_SITE_PACKAGES}/odil")
+ install(FILES ${Python_Files} DESTINATION "${PYTHON_SITE_PACKAGES}/odil")
++
++if(WIN32)
++    install(TARGETS libodil RUNTIME DESTINATION "${PYTHON_SITE_PACKAGES}/odil")
++endif()
