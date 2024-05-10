@@ -9,13 +9,16 @@ source:
   sha256: 0f78095600f6348cd53d9c04d1659beca5d6d01cd189a443655941229b903b5e
   patches:
     - fix-module-type.patch
+    - ssize_t.patch
+    - windows_build.patch
 
 build:
-  number: 0
+  number: 1
 
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ stdlib("c") }}
     - cmake
     - ninja
   host:
@@ -25,6 +28,7 @@ requirements:
     - jsoncpp
     - pybind11
     - python
+    - zlib
   run:
     - python
 
