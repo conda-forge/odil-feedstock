@@ -8,12 +8,13 @@ source:
   url: https://github.com/lamyj/odil/archive/v{{ version }}.tar.gz
   sha256: 0f78095600f6348cd53d9c04d1659beca5d6d01cd189a443655941229b903b5e
   patches:
+    # - remove_distutils.patch
     - fix-module-type.patch
     - ssize_t.patch
     - windows_build.patch
 
 build:
-  number: 1
+  number: 2
 
 requirements:
   build:
