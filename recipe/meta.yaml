@@ -1,4 +1,4 @@
-{% set version = "0.12.2" %}
+{% set version = "0.13.0" %}
 
 package:
   name: odil
@@ -6,25 +6,30 @@ package:
 
 source:
   url: https://github.com/lamyj/odil/archive/v{{ version }}.tar.gz
-  sha256: 717be4d42b69ed6060d984e7966ccc1081db957cc54fd1e90ffbdf47c18321cb
+  sha256: 0f78095600f6348cd53d9c04d1659beca5d6d01cd189a443655941229b903b5e
   patches:
     - remove_distutils.patch
+    - fix-module-type.patch
+    - ssize_t.patch
+    - windows_build.patch
 
 build:
-  number: 8
-  skip: true  # [win]
+  number: 2
 
 requirements:
   build:
     - {{ compiler('cxx') }}
+    - {{ stdlib("c") }}
     - cmake
     - ninja
   host:
     - libboost-devel
+    - dcmtk
     - icu
     - jsoncpp
     - pybind11
     - python
+    - zlib
   run:
     - python
 
