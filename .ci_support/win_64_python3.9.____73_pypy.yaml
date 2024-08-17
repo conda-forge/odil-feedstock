@@ -11,7 +11,7 @@ icu:
 jsoncpp:
 - 1.9.5
 libboost_devel:
-- '1.84'
+- '1.86'
 pin_run_as_build:
   python:
     min_pin: x.x
@@ -21,4 +21,4 @@ python:
 target_platform:
 - win-64
 zlib:
-- '1.2'
+- '1'
