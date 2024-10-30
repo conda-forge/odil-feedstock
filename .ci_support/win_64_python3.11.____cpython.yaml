@@ -7,9 +7,9 @@ channel_targets:
 cxx_compiler:
 - vs2019
 icu:
-- '73'
+- '75'
 jsoncpp:
-- 1.9.5
+- 1.9.6
 libboost_devel:
 - '1.86'
 pin_run_as_build:
