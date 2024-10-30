@@ -1,7 +1,7 @@
 From 69328fa8200bd9f4b4684d3f40bf9b1ff9c7fdd3 Mon Sep 17 00:00:00 2001
 From: Julien Lamy <lamy@unistra.fr>
 Date: Sun, 14 Apr 2024 14:20:16 +0200
-Subject: [PATCH 3/3] fix windows build
+Subject: [PATCH 3/4] fix windows build
 
 ---
  src/CMakeLists.txt   | 15 +++++++++++----

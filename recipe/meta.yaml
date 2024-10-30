@@ -14,6 +14,8 @@ source:
     - patches/0002-Fix-type-in-wrappers.patch
     # partial backport of https://github.com/lamyj/odil/commit/676f9f30cff80c2c941e06cd7bcc3a89e07f9517
     - patches/0003-fix-windows-build.patch
+    # backport https://github.com/lamyj/odil/commit/0b72379de94b53100a8a8af9eb49e92bafce8ed7
+    - patches/0004-Add-missing-header.patch
 
 build:
   number: 3

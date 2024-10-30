@@ -1,7 +1,7 @@
 From 4fe0120d4515e3dd057cda27293f86fa6fd6d31c Mon Sep 17 00:00:00 2001
 From: Julien Lamy <lamy@unistra.fr>
 Date: Sun, 14 Apr 2024 08:56:06 +0200
-Subject: [PATCH 2/3] Fix type in wrappers
+Subject: [PATCH 2/4] Fix type in wrappers
 
 ---
  wrappers/python/Element.cpp | 4 ++--

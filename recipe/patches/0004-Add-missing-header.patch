@@ -1,0 +1,21 @@
+From 228e005c065c463a622e2beda267d7a44958a6b9 Mon Sep 17 00:00:00 2001
+From: Julien Lamy <lamy@unistra.fr>
+Date: Fri, 10 May 2024 08:21:56 +0200
+Subject: [PATCH 4/4] Add missing header
+
+---
+ src/odil/Tag.h | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/odil/Tag.h b/src/odil/Tag.h
+index 9a59d45..49b412e 100644
+--- a/src/odil/Tag.h
++++ b/src/odil/Tag.h
+@@ -10,6 +10,7 @@
+ #define _5faf4691_e936_476e_8ad3_40f36a167a74
+ 
+ #include <cstddef>
++#include <cstdint>
+ #include <ostream>
+ #include <string>
+ 
