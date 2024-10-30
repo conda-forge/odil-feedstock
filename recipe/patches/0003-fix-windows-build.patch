@@ -1,0 +1,122 @@
+From 69328fa8200bd9f4b4684d3f40bf9b1ff9c7fdd3 Mon Sep 17 00:00:00 2001
+From: Julien Lamy <lamy@unistra.fr>
+Date: Sun, 14 Apr 2024 14:20:16 +0200
+Subject: [PATCH 3/4] fix windows build
+
+---
+ src/CMakeLists.txt   | 15 +++++++++++----
+ src/odil/asio.cpp    | 10 ----------
+ tests/CMakeLists.txt | 15 ++++++++++-----
+ 3 files changed, 21 insertions(+), 19 deletions(-)
+ delete mode 100644 src/odil/asio.cpp
+
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index 49c87da..2c5f0ce 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -3,6 +3,7 @@ find_package(ICU REQUIRED COMPONENTS uc)
+ find_package(JsonCpp REQUIRED)
+ if(WITH_DCMTK)
+     find_package(DCMTK REQUIRED)
++    find_package(ZLIB REQUIRED)
+ endif()
+ 
+ file(GLOB_RECURSE Header_Files "*.h")
+@@ -24,7 +25,6 @@ add_library(libodil ${Source_Files} ${Header_Files} ${templates})
+ target_compile_definitions(
+     libodil 
+     PUBLIC
+-        BOOST_ASIO_SEPARATE_COMPILATION ${DCMTK_DEFINITIONS}
+         ODIL_VERSION_MAJOR=${Odil_VERSION_MAJOR}
+         $<$<BOOL:BUILD_SHARED_LIBS>:BOOST_ALL_DYN_LINK>
+         $<$<PLATFORM_ID:Windows>:BOOST_UUID_FORCE_AUTO_LINK>
+@@ -34,14 +34,12 @@ target_compile_definitions(
+ target_include_directories(
+     libodil 
+     PUBLIC 
+-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/> $<INSTALL_INTERFACE:>
+-        "$<$<BOOL:${WITH_DCMTK}>:${DCMTK_INCLUDE_DIRS}>")
++        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/> $<INSTALL_INTERFACE:>)
+ 
+ target_link_libraries(
+     libodil 
+     PUBLIC
+         Boost::date_time Boost::exception Boost::filesystem Boost::log 
+-        "$<$<BOOL:${WITH_DCMTK}>:${DCMTK_LIBRARIES}>"
+         ICU::uc JsonCpp::JsonCpp
+         $<$<PLATFORM_ID:Windows>:netapi32>
+         # WARNING Need to link with bcrypt explicitly, 
+@@ -49,6 +47,15 @@ target_link_libraries(
+         # Not sure why iphlpapi is not linked.
+         "$<$<BOOL:${VCPKG_TOOLCHAIN}>:bcrypt;iphlpapi>")
+ 
++if(WITH_DCMTK)
++    if("${DCMTK_VERSION}" VERSION_LESS 3.6.7)
++        target_include_directories(libodil PUBLIC ${DCMTK_INCLUDE_DIRS})
++        target_link_libraries(libodil PUBLIC ${DCMTK_LIBRARIES})
++    else()
++        target_link_libraries(libodil PUBLIC DCMTK::DCMTK ZLIB::ZLIB)
++    endif()
++endif()
++
+ if(APPLE)
+     # WARNING: Boost::log may add -licudata  -licui18n  -licuu, which cause 
+     # problems with macOS/brew
+diff --git a/src/odil/asio.cpp b/src/odil/asio.cpp
+deleted file mode 100644
+index 33401af..0000000
+--- a/src/odil/asio.cpp
++++ /dev/null
+@@ -1,10 +0,0 @@
+-/*************************************************************************
+- * odil - Copyright (C) Universite de Strasbourg
+- * Distributed under the terms of the CeCILL-B license, as published by
+- * the CEA-CNRS-INRIA. Refer to the LICENSE file or to
+- * http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html
+- * for details.
+- ************************************************************************/
+-
+-// Build Boost.asio in Odil
+-#include <boost/asio/impl/src.hpp>
+diff --git a/tests/CMakeLists.txt b/tests/CMakeLists.txt
+index d9f5278..6b8be52 100644
+--- a/tests/CMakeLists.txt
++++ b/tests/CMakeLists.txt
+@@ -1,6 +1,7 @@
+ find_package(
+     Boost COMPONENTS exception filesystem log unit_test_framework REQUIRED)
+ find_package(DCMTK REQUIRED)
++find_package(ZLIB REQUIRED)
+ find_package(JsonCpp REQUIRED)
+ 
+ add_subdirectory(tools)
+@@ -36,20 +37,24 @@ foreach(test_file ${tests})
+     target_compile_definitions(
+         test_${test} 
+         PRIVATE
+-            BOOST_ASIO_SEPARATE_COMPILATION ${DCMTK_DEFINITIONS}
+             ODIL_VERSION_MAJOR=${Odil_VERSION_MAJOR}
+             $<$<BOOL:BUILD_SHARED_LIBS>:BOOST_ALL_DYN_LINK>)
+     
+-    target_include_directories(
+-        test_${test} PRIVATE ${CMAKE_SOURCE_DIR}/src ${DCMTK_INCLUDE_DIRS})
++    target_include_directories(test_${test} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+     
+     target_link_libraries(
+         test_${test} 
+         PRIVATE 
+-            Boost::unit_test_framework ${DCMTK_LIBRARIES} JsonCpp::JsonCpp 
+-            libodil
++            Boost::unit_test_framework JsonCpp::JsonCpp libodil
+             $<$<PLATFORM_ID:Windows>:Ws2_32>)
+     
++    if("${DCMTK_VERSION}" VERSION_LESS 3.6.7)
++        target_include_directories(test_${test} PUBLIC ${DCMTK_INCLUDE_DIRS})
++        target_link_libraries(test_${test} PUBLIC ${DCMTK_LIBRARIES})
++    else()
++        target_link_libraries(test_${test} PUBLIC DCMTK::DCMTK ZLIB::ZLIB)
++    endif()
++    
+     set_target_properties(
+         test_${test} PROPERTIES OUTPUT_NAME ${test} FOLDER "Tests")
+ 

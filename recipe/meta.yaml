@@ -8,13 +8,17 @@ source:
   url: https://github.com/lamyj/odil/archive/v{{ version }}.tar.gz
   sha256: 0f78095600f6348cd53d9c04d1659beca5d6d01cd189a443655941229b903b5e
   patches:
-    # - remove_distutils.patch
-    - fix-module-type.patch
-    - ssize_t.patch
-    - windows_build.patch
+    # backport https://github.com/lamyj/odil/commit/4a64df2c2a38a2f7dc9be2c2732b82a6f38496e8
+    - patches/0001-Fix-module-type.patch
+    # backport https://github.com/lamyj/odil/commit/4a64df2c2a38a2f7dc9be2c2732b82a6f38496e8
+    - patches/0002-Fix-type-in-wrappers.patch
+    # partial backport of https://github.com/lamyj/odil/commit/676f9f30cff80c2c941e06cd7bcc3a89e07f9517
+    - patches/0003-fix-windows-build.patch
+    # backport https://github.com/lamyj/odil/commit/0b72379de94b53100a8a8af9eb49e92bafce8ed7
+    - patches/0004-Add-missing-header.patch
 
 build:
-  number: 2
+  number: 3
 
 requirements:
   build:
