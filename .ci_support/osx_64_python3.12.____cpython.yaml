@@ -15,9 +15,9 @@ cxx_compiler:
 cxx_compiler_version:
 - '17'
 icu:
-- '73'
+- '75'
 jsoncpp:
-- 1.9.5
+- 1.9.6
 libboost_devel:
 - '1.86'
 macos_machine:
