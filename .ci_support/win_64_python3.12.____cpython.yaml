@@ -5,13 +5,13 @@ channel_sources:
 channel_targets:
 - conda-forge main
 cxx_compiler:
-- vs2019
+- vs2022
 icu:
 - '75'
 jsoncpp:
 - 1.9.6
 libboost_devel:
-- '1.86'
+- '1.88'
 pin_run_as_build:
   python:
     min_pin: x.x
