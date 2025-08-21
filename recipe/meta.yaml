@@ -16,9 +16,11 @@ source:
     - patches/0003-fix-windows-build.patch
     # backport https://github.com/lamyj/odil/commit/0b72379de94b53100a8a8af9eb49e92bafce8ed7
     - patches/0004-Add-missing-header.patch
+    # backport https://github.com/lamyj/odil/commit/b9b48a231f6591bd966e1c7500d4a085f6b4620a
+    - patches/0005-Fix-for-boost-asio-1.87.patch
 
 build:
-  number: 5
+  number: 6
 
 requirements:
   build:
