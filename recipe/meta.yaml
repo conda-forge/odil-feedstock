@@ -20,7 +20,7 @@ source:
     - patches/0005-Fix-for-boost-asio-1.87.patch
 
 build:
-  number: 8
+  number: 9
 
 requirements:
   build:
